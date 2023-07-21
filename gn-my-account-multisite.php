@@ -194,6 +194,7 @@ function gn_woocommerce_custom_orders_table() {
                 echo '<thead><tr>';
                 echo '<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-number"><span class="nobr">Order</span></th>';
                 echo '<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-date"><span class="nobr">Date</span></th>';
+                echo '<th class="woocommerce-orders-table__header woocommerce-orders-table__header-product-name"><span class="nobr">Product Name</span></th>'; // Add the Product Name column
                 echo '<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-status"><span class="nobr">Status</span></th>';
                 echo '<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-total"><span class="nobr">Total</span></th>';
                 echo '<th class="woocommerce-orders-table__header woocommerce-orders-table__header-order-actions"><span class="nobr">Actions</span></th>';
@@ -203,16 +204,32 @@ function gn_woocommerce_custom_orders_table() {
                 foreach ( $all_orders as $order ) {
                     // Get the site ID where the order was created
                     $site_id = $order->get_meta( '_order_blog_id', true );
+
+                    // Switch to the site where the order was created
+                    switch_to_blog( $site_id );
+
                     // Get the site URL of the order
                     $site_url = get_home_url( $site_id );
 
                     echo '<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-' . esc_attr( $order->get_status() ) . ' order">';
                     echo '<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-number" data-title="Order"><a href="' . esc_url( $site_url . '/my-account/view-order/' . $order->get_id() ) . '">' . $order->get_order_number() . '</a></td>';
                     echo '<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-date" data-title="Date">' . wc_format_datetime( $order->get_date_created() ) . '</td>';
+                    echo '<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-product-name" data-title="Product Name">'; // Start Product Name cell
+                    foreach ( $order->get_items() as $item_id => $item ) {
+                        $product_id = $item->get_product_id();
+                        $product_name = $item->get_name();
+                        $product_permalink = get_permalink( $product_id );
+                        // Display the product name with a link to the product page
+                        echo '<a href="' . esc_url( $product_permalink ) . '">' . $product_name . '</a><br>';
+                    }
+                    echo '</td>'; // End Product Name cell
                     echo '<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-status" data-title="Status">' . wc_get_order_status_name( $order->get_status() ) . '</td>';
                     echo '<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-total" data-title="Total">' . wc_price( $order->get_total(), array( 'currency' => $order->get_currency() ) ) . '</td>';
                     echo '<td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions" data-title="Actions"><a href="' . esc_url( $site_url . '/my-account/view-order/' . $order->get_id() ) . '" class="woocommerce-button button view">View</a></td>';
                     echo '</tr>';
+
+                    // Restore the current site before moving to the next order
+                    restore_current_blog();
                 }
 
                 echo '</tbody>';
@@ -229,7 +246,6 @@ function gn_woocommerce_custom_orders_table() {
     }
 }
 add_shortcode( 'gn_woocommerce_custom_orders_table', 'gn_woocommerce_custom_orders_table' );
-
 
 // Function to override the default "My Orders" endpoint template
 function gn_my_account_override_orders_template( $template ) {
