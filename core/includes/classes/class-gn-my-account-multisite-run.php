@@ -92,7 +92,7 @@ class Gn_My_Account_Multisite_Run{
 	 * @return	void
 	 */
 	public function enqueue_backend_scripts_and_styles() {
-		wp_enqueue_style( 'gnmyaccoun-backend-styles', GNMYACCOUN_PLUGIN_URL . 'core/includes/assets/css/backend-styles.css', array(), GNMYACCOUN_VERSION, 'all' );
+		wp_enqueue_style( 'gnmyaccoun-frontend-styles', GNMYACCOUN_PLUGIN_URL . 'core/includes/assets/css/backend-styles.css', array(), GNMYACCOUN_VERSION, 'all' );
 		wp_enqueue_script( 'gnmyaccoun-backend-scripts', GNMYACCOUN_PLUGIN_URL . 'core/includes/assets/js/backend-scripts.js', array(), GNMYACCOUN_VERSION, false );
 		wp_localize_script( 'gnmyaccoun-backend-scripts', 'gnmyaccoun', array(
 			'plugin_name'   	=> __( GNMYACCOUN_NAME, 'gn-my-account-multisite' ),
