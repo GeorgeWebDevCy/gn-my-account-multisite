@@ -78,4 +78,14 @@ function GNMYACCOUN() {
 	return Gn_My_Account_Multisite::instance();
 }
 
+// Check if WooCommerce is active on plugin activation
+function gn_my_account_multisite_check_woocommerce() {
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        // WooCommerce is not installed or activated, deactivate the plugin
+        deactivate_plugins( plugin_basename( __FILE__ ) );
+        wp_die( 'This plugin requires WooCommerce to be installed and activated. Please install and activate WooCommerce first.' );
+    }
+}
+register_activation_hook( __FILE__, 'gn_my_account_multisite_check_woocommerce' );
+
 GNMYACCOUN();
