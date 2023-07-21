@@ -98,6 +98,11 @@ function gn_my_account_multisite_enqueue_styles() {
         table.woocommerce-orders-table.woocommerce-MyAccount-orders.shop_table.shop_table_responsive.my_account_orders.account-orders-table {
             display: none;
         }
+
+        .woocommerce-info
+        {
+            display:none;
+        }
     ';
 
     // Add the inline CSS to the enqueued style
