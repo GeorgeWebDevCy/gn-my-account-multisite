@@ -83,9 +83,7 @@ function gn_my_account_multisite_enqueue_styles() {
     // Get the URL of the plugin folder
     $plugin_url = GNMYACCOUN_PLUGIN_URL;
 
-    // Enqueue the custom CSS file
-    wp_enqueue_style( 'gn-my-account-multisite-css', $plugin_url . 'gn-my-account-multisite.css' );
-
+    
     // Inline CSS
     $inline_css = '
         /* Custom styles for tables with class "george" */
