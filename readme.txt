@@ -2,12 +2,12 @@
 Author URI: https://www.georgenicolaou.me/
 Plugin URI: https://www.georgenicolaou.me/plugins/gn-my-account-multisite
 Donate link: 
-Contributors: 
+Contributors: orionaselite
 Tags: 
 Requires at least: 
-Tested up to: 
+Tested up to: 6.3
 Requires PHP: 
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,3 +59,7 @@ An answer to that question.
 
 = 1.0.0: July 20, 2023 =
 * Birthday of  GN My Account Multisite
+
+= 1.0.1: August 11, 2023 =
+* Added self-hosted github updater
+
