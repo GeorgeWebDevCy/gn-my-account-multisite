@@ -76,16 +76,20 @@ function GNMYACCOUN() {
     return Gn_My_Account_Multisite::instance();
 }
 
-/**
- * Enqueue the custom CSS and inline styles.
- */
+// Enqueue the custom CSS.
 function gn_my_account_multisite_enqueue_styles() {
-    // Get the URL of the plugin folder
-    $plugin_url = GNMYACCOUN_PLUGIN_URL;
+    // Enqueue the main plugin stylesheet
+    //wp_enqueue_style( 'gn-my-account-multisite-css', GNMYACCOUN_PLUGIN_URL . 'assets/css/style.css' );
 
-    
-    // Inline CSS
-    $inline_css = '
+    // Load inline CSS in the footer
+    add_action( 'wp_footer', 'gn_my_account_multisite_output_inline_css' );
+}
+add_action( 'wp_enqueue_scripts', 'gn_my_account_multisite_enqueue_styles' );
+
+// Inline CSS
+function gn_my_account_multisite_output_inline_css() {
+    // Custom styles
+    $gn_my_account_multisite_inline_css = '
         /* Custom styles for tables with class "george" */
         table.george.woocommerce-orders-table.woocommerce-MyAccount-orders.shop_table.shop_table_responsive.my_account_orders.account-orders-table {
             width: 100%;
@@ -96,16 +100,15 @@ function gn_my_account_multisite_enqueue_styles() {
         table.woocommerce-orders-table.woocommerce-MyAccount-orders.shop_table.shop_table_responsive.my_account_orders.account-orders-table {
             display: none;
         }
-        .woocommerce-account .woocommerce .woocommerce-MyAccount-content .woocommerce-info
-        {
-            display:none;
+
+        .woocommerce-account .woocommerce .woocommerce-MyAccount-content .woocommerce-info {
+            display: none;
         }
     ';
-
-    // Add the inline CSS to the enqueued style
-    wp_add_inline_style( 'gn-my-account-multisite-css', $inline_css );
+    
+    // Output the inline CSS
+    echo '<style type="text/css">' . $gn_my_account_multisite_inline_css . '</style>';
 }
-add_action( 'wp_enqueue_scripts', 'gn_my_account_multisite_enqueue_styles' );
 
 
 // Check if WooCommerce is active on plugin activation
