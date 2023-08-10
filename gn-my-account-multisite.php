@@ -7,7 +7,7 @@
  * Plugin Name:    GN My Account Multisite
  * Plugin URI:    https://www.georgenicolaou.me/plugins/gn-my-account-multisite
  * Description:   Display all orders from all sites in the multisite network for the current user
- * Version:       1.0.0
+ * Version:       1.0.1
  * Author:        George Nicolaou
  * Author URI:    https://www.georgenicolaou.me/
  * Text Domain:   gn-my-account-multisite
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Plugin Name:    GN My Account Multisite
  * Plugin URI:    https://www.georgenicolaou.me/plugins/gn-my-account-multisite
  * Description:   Display all orders from all sites in the multisite network for the current user
- * Version:       1.0.0
+ * Version:       1.0.1
  * Author:        George Nicolaou
  * Author URI:    https://www.georgenicolaou.me/
  * Text Domain:   gn-my-account-multisite
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'GNMYACCOUN_NAME', 'GN My Account Multisite' );
 
 // Plugin version
-define( 'GNMYACCOUN_VERSION', '1.0.0' );
+define( 'GNMYACCOUN_VERSION', '1.0.1' );
 
 // Plugin Root File
 define( 'GNMYACCOUN_PLUGIN_FILE', __FILE__ );
@@ -274,3 +274,14 @@ function gn_my_account_multisite_get_formatted_order_tax( $order ) {
 
 // Initialize the plugin
 GNMYACCOUN();
+require 'plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/GeorgeWebDevCy/gn-my-account-multisite',
+	__FILE__,
+	'gn-my-account-multisite'
+);
+
+//Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('main');
